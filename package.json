@@ -5,6 +5,10 @@
   },
   "version": "0.1.0",
   "description": "Visualize decision tree with add and delete actions",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wdedulle/decision-tree-visualizer.git"
+  },
   "main": "dist/index.mjs",
   "module": "dist/index.mjs",
   "files": [
