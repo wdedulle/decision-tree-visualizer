@@ -5,6 +5,8 @@ NPM package that a visualize decision tree with add and delete actions
 
 A lightweight and interactive web component for visualizing decision trees. Nodes can be added or removed dynamically, and connections are automatically drawn with SVG. Ideal for embedding in any web page or integrating into frameworks like Angular.
 
+![Example](./img/example.PNG "Decission tree")
+
 ## Features
 
 - Visual representation of hierarchical decision trees
@@ -132,7 +134,6 @@ npx vite build
 | `treedata` | Object | Root node of the tree. Must include `id`, `label`, and optional `children` and `edgeLabel`. |
 |`promptCallback`|callback function|Set your own callback function for a custom prompt. See modal.html|
 |------------|--------|-----------------------------------------------------------------------------|
-
 
 
 ### Node Object Shape
