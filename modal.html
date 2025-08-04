@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>Modal met Input</title>
+  <style>
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 8px;
+      width: 320px;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: black;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      box-sizing: border-box;
+    }
+
+    .modal-footer {
+      margin-top: 15px;
+      text-align: right;
+    }
+
+    .modal-footer button {
+      padding: 6px 12px;
+    }
+  </style>
+</head>
+<body>
+
+<h1 class="title--h1">Flowchart scenariobepaling aanmaken</h1>
+
+<decision-tree-visualizer></decision-tree-visualizer>
+
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closeModalBtn">&times;</span>
+    <h3>Voer gegevens in</h3>
+
+    <form id="modalForm">
+      <label for="type">Type:</label>
+      <select id="type" name="type" required>
+        <option value="">Kies een waarde</option>
+        <option value="child">child</option>
+        <option value="leaf">leaf</option>
+      </select>
+
+      <label for="label">Label:</label>
+      <input type="text" id="label" name="label" required>
+    <div id="edgeLabelRow">
+      <label for="edgeLabel">Edge Label:</label>
+      <input type="text" id="edgeLabel" name="edgeLabel" required>
+</div>
+      <div class="modal-footer">
+        <button type="submit">Opslaan</button>
+      </div>
+    </form>
+
+  </div>
+</div>
+<script type="module">
+    import '/src/index.js'; 
+
+    const modal = document.getElementById("myModal");
+    const closeBtn = document.getElementById("closeModalBtn");
+    const form = document.getElementById("modalForm");
+
+    const showModal = () => {
+        modal.style.display = "block";
+    };
+
+    const hideModal = () => {
+        modal.style.display = "none";
+        form.reset();
+    };
+
+    closeBtn.onclick = () => {
+        hideModal();
+    };
+
+    window.onclick = (event) => {
+        if (event.target === modal) {
+            hideModal();
+        }
+    };
+
+    const el = document.querySelector('decision-tree-visualizer');
+    // el.treedata = {
+    // id: "Publiekelijk toegankelijk",
+    // label: "Publiekelijk toegankelijk",
+    // children: [
+    //     {
+    //     id: "Plaats voor aanmeren",
+    //     label: "Plaats voor aanmeren",
+    //     edgeLabel: "ja",
+    //     children: [
+    //         { id: "Sc. 1", label: "Sc. 1", edgeLabel: "ja" },
+    //         { id: "Sc. 2", label: "Sc. 2", edgeLabel: "nee" }
+    //     ]
+    //     },
+    //     {
+    //     id: "Sc. 3",
+    //     label: "Sc. 3",
+    //     edgeLabel: "nee"
+    //     }
+    // ]};
+
+    el.promptCallback = function (parentNode) {
+        let isRoot = false;        
+        const edgeLabelRow = document.getElementById("edgeLabelRow");
+
+        edgeLabelRow.style.display = "block";
+        document.getElementById("edgeLabel").setAttribute("required", "true");
+
+        if(!parentNode) {
+            isRoot = true;
+            edgeLabelRow.style.display = "none";
+            document.getElementById("edgeLabel").removeAttribute("required");
+        }
+
+        showModal();
+        return new Promise((resolve) => {
+            form.onsubmit = function (e) {
+                e.preventDefault();
+
+                const type = form.type.value;
+                const label = form.label.value;
+                const edgeLabel = isRoot?null:form.edgeLabel.value;
+
+                hideModal();
+
+                resolve({ type, label, edgeLabel, isRoot });
+            };
+        });
+    };
+    </script>
+
+</body>
+</html>

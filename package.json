@@ -1,0 +1,34 @@
+{
+  "name": "decision-tree-visualizer",
+  "publishConfig": {
+    "access": "public"
+  },
+  "version": "0.1.0",
+  "description": "Visualize decision tree with add and delete actions",
+  "main": "dist/index.mjs",
+  "module": "dist/index.mjs",
+  "files": [
+    "dist",
+    "src",
+    "*.html",
+    "*.config.js"
+  ],
+  "scripts": {
+    "build": "vite build"
+  },
+  "keywords": [
+    "decision tree",
+    "visualization",
+    "javascript",
+    "tree editor",
+    "html",
+    "tree",
+    "descision",
+    "visualize"
+  ],
+  "author": "Wim Dedulle",
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^5.4.19"
+  }
+}

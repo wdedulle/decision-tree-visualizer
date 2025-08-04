@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Beslissingsboom met toevoegen & verwijderen</title>
+    <style>
+        .title--h1 {
+            text-align: center;
+            color: #176d8a;
+            font-weight: bold;
+            font-size: 32px;
+            margin-bottom: 2rem;
+        }
+
+        .title--h2 {
+            text-align: center;
+            color: #176d8a;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="title--h1">Flowchart scenariobepaling aanmaken</h1>
+
+    <decision-tree-visualizer></decision-tree-visualizer>
+    <div>
+        <h2 class="title--h2">Scenario beschrijving</h2>
+        <span id="description"></span>
+    </div>
+    <script type="module">
+        import '/src/index.js';
+
+        const el = document.querySelector('decision-tree-visualizer');
+        el.treedata = {
+            id: "Publiekelijk toegankelijk",
+            label: "Publiekelijk toegankelijk",
+            children: [
+                {
+                    id: "Plaats voor aanmeren",
+                    label: "Plaats voor aanmeren",
+                    edgeLabel: "ja",
+                    children: [
+                        { id: "Sc. 1", label: "Sc. 1", edgeLabel: "ja" },
+                        { id: "Sc. 2", label: "Sc. 2", edgeLabel: "nee" }
+                    ]
+                },
+                {
+                    id: "Sc. 3",
+                    label: "Sc. 3",
+                    edgeLabel: "nee"
+                }
+            ]
+        };
+        el.promptCallback = async (parentNode) => {
+            let edgeLabel = null;
+            if (parentNode) {
+                edgeLabel = prompt('Naam van de node (line label):');
+                if (edgeLabel === null) return null;
+            }
+
+            let type = prompt('Type kind: "child" of "leaf":');
+            if (type === null) return null;
+            type = type.toLowerCase().trim();
+            if (type !== 'child' && type !== 'leaf') {
+                alert('Ongeldig type. Typ "child" of "leaf".');
+                return null;
+            }
+
+            const label = prompt('Naam van de nieuwe node:');
+            if (label === null) return null;
+
+            return { type, label, edgeLabel };
+        };
+    </script>
+</body>
+
+</html>
