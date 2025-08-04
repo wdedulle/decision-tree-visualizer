@@ -1,5 +1,5 @@
 import styleText from './css/_decision_tree_visualizer.css?inline';
-import { createAddButton, createRemoveButton } from './lib/buttons';
+import { createAddButton, createRemoveButton, createSvgPath, createSvgText } from './lib/elements';
 import { defaultPrompt, nodeAttributesValid } from './lib/prompts';
 class DecisionTreeVisualizer extends HTMLElement {
   constructor() {
@@ -71,7 +71,6 @@ class DecisionTreeVisualizer extends HTMLElement {
       nodeDiv.textContent = node.label;
 
       wrapper.appendChild(nodeDiv);
-
       
       const btnContainer = document.createElement('div');
       btnContainer.className = 'btn-container';
@@ -118,14 +117,7 @@ class DecisionTreeVisualizer extends HTMLElement {
     const c2x = endX;
     const c2y = endY - deltaY;
 
-    const pathData = `M${startX},${startY} C${c1x},${c1y} ${c2x},${c2y} ${endX},${endY}`;
-
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    path.setAttribute('d', pathData);
-    path.setAttribute('stroke', 'black');
-    path.setAttribute('fill', 'none');
-    path.setAttribute('stroke-width', '2');    
-    svg.appendChild(path);
+    svg.appendChild(createSvgPath(`M${startX},${startY} C${c1x},${c1y} ${c2x},${c2y} ${endX},${endY}`));
 
     if (edgeLabel) {
       function cubicBezier(t, p0, p1, p2, p3) {
@@ -137,19 +129,9 @@ class DecisionTreeVisualizer extends HTMLElement {
         );
       }
 
-      const midX = cubicBezier(0.5, startX, c1x, c2x, endX);
-      const midY = cubicBezier(0.5, startY, c1y, c2y, endY);
-
-      const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-      text.setAttribute('x', midX);
-      text.setAttribute('y', midY - 6);
-      text.setAttribute('text-anchor', 'middle');
-      text.setAttribute('font-size', '15');
-      text.setAttribute('fill', 'black');
-      text.setAttribute('z-index', '10');
-      text.setAttribute('font-weight', 'bold');
-      text.textContent = edgeLabel;
-      svg.appendChild(text);
+      svg.appendChild(createSvgText(
+        cubicBezier(0.5, startX, c1x, c2x, endX), 
+        cubicBezier(0.5, startY, c1y, c2y, endY), edgeLabel));
     }
   }
 
