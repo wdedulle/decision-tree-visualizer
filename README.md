@@ -1,6 +1,7 @@
-# decision-tree-visualizer
+# decision-tree-visualizer 
+
 NPM package that a visualize decision tree with add and delete actions
-=======
+
 # Decision Tree Visualizer
 
 A lightweight and interactive web component for visualizing decision trees. Nodes can be added or removed dynamically, and connections are automatically drawn with SVG. Ideal for embedding in any web page or integrating into frameworks like Angular.
