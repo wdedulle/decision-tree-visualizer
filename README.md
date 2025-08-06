@@ -84,6 +84,12 @@ Or include directly in HTML:
 
 ### Angular Example
 In your Angular Application:
+
+Firts install @angular/elements
+```bash
+npm install @angular/elements --save
+```
+
 Add in angular.json > projects > architect > build
 ```json
  "scripts": [
@@ -91,6 +97,41 @@ Add in angular.json > projects > architect > build
   ]
 ```
 
+Add CUSTOM_ELEMENTS_SCHEMA to file module where the component is declared, id AppModule
+prevents error in yout IDE or compiler
+```ts
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+@NgModule({
+  declarations: [],
+  imports: [CommonModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA] // <- HAS TO BE HERE
+})
+export class AppModule {}
+
+```
+
+Add TypeScript-support
+
+Make a custom-elements.d.ts file in src map with this content
+```ts
+declare namespace JSX {
+  interface IntrinsicElements {
+    'decision-tree-visualizer': any;
+  }
+}
+
+```
+Change tsconfig.app.json file and add
+```json
+  "files": [
+    "src/main.ts",
+    "src/custom-elements.d.ts"
+  ]
+```
+
+Use it in your component 
 ```ts
 // app.component.ts
 import { Component, AfterViewInit } from '@angular/core';

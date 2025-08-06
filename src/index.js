@@ -24,8 +24,7 @@ class DecisionTreeVisualizer extends HTMLElement {
   static observedAttributes = ["treedata"];
 
   attributeChangedCallback(name, oldValue, newValue) {
-    this._treeData  = JSON.parse(newValue);
-    this.buildTree();
+    this.treeData  = JSON.parse(newValue);
   }
 
   connectedCallback() {
@@ -145,7 +144,6 @@ class DecisionTreeVisualizer extends HTMLElement {
 
   async addChildPrompt(parentNode) {
     const nodeAttributes = await this.promptCallback(parentNode);
-
     if(!nodeAttributesValid(nodeAttributes)) return;
 
     const newNode = {
@@ -169,7 +167,9 @@ class DecisionTreeVisualizer extends HTMLElement {
   }
 
   buildTree() {
-    if (!this._treeData || !this.container || !this.svg) {
+    const button = this.container.querySelector(".btn-container");
+    if(button) button.remove();
+    if (!this._treeData) {
       const btnContainer = document.createElement('div');
       btnContainer.className = 'btn-container';
       btnContainer.setAttribute("style", "justify-content: center");
@@ -178,11 +178,6 @@ class DecisionTreeVisualizer extends HTMLElement {
     } else {
       this.svg.innerHTML = '';
       this.container.querySelectorAll('.level').forEach(e => e.remove());
-      const button = this.container.querySelector(".btn-container");
-      if(button) {
-        button.remove()
-      }
-
       this.renderTree(this.container, this._treeData);
       this.connectAllNodes(this._treeData);
     }
