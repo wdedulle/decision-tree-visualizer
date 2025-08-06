@@ -54,7 +54,7 @@ Or include directly in HTML:
   <decision-tree-visualizer></decision-tree-visualizer>
 
   <script type="module">
-      import '/src/index.js';
+      import '/dist/index.mjs';
 
       const el = document.querySelector('decision-tree-visualizer');
       el.treedata = {
@@ -83,7 +83,14 @@ Or include directly in HTML:
 ```
 
 ### Angular Example
-In your Angular component:
+In your Angular Application:
+Add in angular.json > projects > architect > build
+```json
+ "scripts": [
+    "node_modules/decision-tree-visualizer/dist/index.mjs"
+  ]
+```
+
 ```ts
 // app.component.ts
 import { Component, AfterViewInit } from '@angular/core';
