@@ -40,6 +40,15 @@ class DecisionTreeVisualizer extends HTMLElement {
     return this._promptFunction;
   }
 
+
+  get leafOnClickCallback() {
+    return this._leafOnClickCallback;
+  }
+
+  set leafOnClickCallback(callback) {
+    this._leafOnClickCallback = callback;
+  }
+
   set treedata(tree) {
     this._treeData  = tree;
     this.buildTree();
@@ -76,6 +85,7 @@ class DecisionTreeVisualizer extends HTMLElement {
 
       if (!node.children) {
         nodeDiv.setAttribute("style", "cursor: pointer;");
+        if(this.leafOnClickCallback) nodeDiv.onclick =() => this.leafOnClickCallback(node);
       } else {
         btnContainer.appendChild(createAddButton(() => this.addChildPrompt(node)));
       }

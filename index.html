@@ -27,7 +27,7 @@
     <h1 class="title--h1">Flowchart scenariobepaling aanmaken</h1>
 
     <decision-tree-visualizer></decision-tree-visualizer>
-    <div>
+    <div style="text-align: center;">
         <h2 class="title--h2">Scenario beschrijving</h2>
         <span id="description"></span>
     </div>
@@ -55,6 +55,9 @@
                 }
             ]
         };
+        el.leafOnClickCallback = (node) => {
+            document.getElementById('description').textContent ="Hello I am a leaf, this is my id " + node.id;
+        }
         el.promptCallback = async (parentNode) => {
             let edgeLabel = null;
             if (parentNode) {
