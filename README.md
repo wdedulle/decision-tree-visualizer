@@ -182,7 +182,7 @@ npx vite build
 |------------|--------|-----------------------------------------------------------------------------|
 | `treedata` | Object | Root node of the tree. Must include `id`, `label`, and optional `children` and `edgeLabel`. |
 |`promptCallback`|callback function|Set your own callback function for a custom prompt. See modal.html|
-|------------|--------|-----------------------------------------------------------------------------|
+|`leafOnClickCallback`|callback function|Setting a callback function when clicked on leaf node|
 
 
 ### Node Object Shape
